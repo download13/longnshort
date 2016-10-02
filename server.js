@@ -1,9 +1,9 @@
 const koa = require('koa');
-const createRouter = require('koa-router');
+const validator = require('validator');
 const db = require('./db');
 
 
-const router = createRouter();
+const router = require('koa-router')();
 
 const app = koa();
 
@@ -12,11 +12,16 @@ app.use(require('koa-static')('public'));
 router.get('/new/*', function *(next) {
   const long = this.path.substr(5);
   
-  const number = yield db.addUrl(long);
+  if(validator.isURL(long, {protocols: ['http', 'https']})) {
+    const number = yield db.addUrl(long);
   
-  const short = 'https://longnshort-download13.c9users.io/' + number;
-  
-  this.body = {long, short};
+    const short = 'https://longnshort-download13.c9users.io/' + number;
+    
+    this.body = {long, short};
+  } else {
+    this.status = 400;
+    this.body = {error: 'Invalid URL'};
+  }
 });
 
 router.get('/:number', function *(next) {
