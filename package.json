@@ -1,0 +1,13 @@
+{
+  "name": "@download13/longnshort",
+  "version": "0.0.1",
+  "description": "URL Shortener",
+  "main": "server.js",
+  "author": "Erin Dachtler <download333@gmail.com>",
+  "dependencies": {
+    "koa": "^1.2.4",
+    "koa-router": "^5.4.0",
+    "koa-static": "^2.0.0",
+    "sqlite3": "^3.1.4"
+  }
+}
